@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from .apis.routes import users,mood,suggestions
+from app.db.init_db import init_db
 
 app = FastAPI(title="Mood Journal",version="1.0.0")
 
@@ -9,6 +10,9 @@ app.include_router(mood.router,prefix="/mood",tags=["Mood"])
 app.include_router(suggestions.router,prefix="/suggestions",tags=["Suggestions"])
 
 
+@app.on_event("startup")
+def startup():
+    init_db()
 
 
 
